@@ -4,11 +4,11 @@ from elasticsearch_connection import ElasticsearchConnection
 
 es_client = ElasticsearchConnection().get_client()
 
-term = "refreshing pop drink low sugar"
+term = "seafood for grilling"
 size = 5
 
 
-def format_text(description, line_length=50):
+def format_text(description, line_length=120):
     words = description.split()
     if len(words) <= line_length:
         return description
@@ -32,7 +32,7 @@ def search_semantic(term):
 
     for hit in response["hits"]["hits"]:
         score = hit["_score"]
-        name = format_text(hit["_source"]["name"], line_length=6)
+        name = format_text(hit["_source"]["name"], line_length=10)
         description = hit["_source"]["description"]
         formatted_description = format_text(description)
         result.append({
@@ -61,7 +61,7 @@ def search_lexical(term):
 
     for hit in response["hits"]["hits"]:
         score = hit["_score"]
-        name = format_text(hit["_source"]["name"], line_length=6)
+        name = format_text(hit["_source"]["name"], line_length=10)
         description = hit["_source"]["description"]
         result.append({
             'score': score,
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     tabela.columns = ['Search Type', 'Name', 'Score']
 
     tabela['Search Type'] = tabela['Search Type'].astype(str).str.ljust(0)
-    tabela['Name'] = tabela['Name'].astype(str).str.ljust(5)
+    tabela['Name'] = tabela['Name'].astype(str).str.ljust(15)
     tabela['Score'] = tabela['Score'].astype(str).str.ljust(5)
 
     # Exibindo a tabela alinhada à esquerda

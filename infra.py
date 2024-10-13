@@ -54,7 +54,7 @@ def create_inference():
 
 
 if __name__ == '__main__':
-    print(client.info())
+    #print(client.info())
 
     create_inference()
 
